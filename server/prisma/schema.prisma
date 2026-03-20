@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Rider {
+  id               String         @id @default(uuid())
+  name             String
+  phone            String         @unique
+  email            String?
+  passwordHash     String
+  aadhaarVerified  Boolean        @default(false)
+  upiId            String?
+  city             String
+  platform         String         // BLINKIT | ZEPTO | INSTAMART
+  pinCode          String
+  weeklyEarningsBand String?
+  walletBalance    Float          @default(200.0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  policies      Policy[]
+  claims        Claim[]
+  transactions  Transaction[]
+  notifications Notification[]
+  earningsLogs  EarningsLog[]
+}
+
+model Policy {
+  id               String   @id @default(uuid())
+  riderId          String
+  status           String   // ACTIVE | EXPIRED | PAUSED
+  weeklyPremium    Float
+  maxWeeklyPayout  Float
+  zoneRiskScore    Float
+  platformModifier Float
+  activatedAt      DateTime @default(now())
+  expiresAt        DateTime
+
+  rider  Rider   @relation(fields: [riderId], references: [id])
+  claims Claim[]
+}
+
+model Claim {
+  id                  String    @id @default(uuid())
+  riderId             String
+  policyId            String
+  claimType           String    // AUTO | SEMI_AUTO | MANUAL
+  triggerType          String    // HEAVY_RAINFALL | FLASH_FLOOD | etc.
+  status              String    // PENDING | UNDER_REVIEW | APPROVED | REJECTED | PAID
+  disruptionStartedAt DateTime
+  disruptionEndedAt   DateTime?
+  baselineEarnings    Float
+  actualEarnings      Float
+  disruptionFraction  Float
+  peakCoefficient     Float
+  calculatedPayout    Float
+  approvedPayout      Float?
+  fraudScore          Float?
+  riderNote           String?
+  mediaUrl            String?
+  geolat              Float
+  geolong             Float
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  rider  Rider  @relation(fields: [riderId], references: [id])
+  policy Policy @relation(fields: [policyId], references: [id])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  riderId     String
+  type        String   // PREMIUM_DEBIT | CLAIM_CREDIT | WALLET_TOPUP
+  amount      Float
+  status      String   // PENDING | SUCCESS | FAILED
+  upiRef      String?
+  description String
+  createdAt   DateTime @default(now())
+
+  rider Rider @relation(fields: [riderId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  riderId   String
+  title     String
+  body      String
+  type      String   // DISRUPTION_ALERT | CLAIM_UPDATE | PAYOUT | PREMIUM
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  rider Rider @relation(fields: [riderId], references: [id])
+}
+
+model EarningsLog {
+  id            String   @id @default(uuid())
+  riderId       String
+  date          DateTime
+  slot          String   // MORNING | AFTERNOON | EVENING | NIGHT
+  earnings      Float
+  deliveryCount Int
+  createdAt     DateTime @default(now())
+
+  rider Rider @relation(fields: [riderId], references: [id])
+}
