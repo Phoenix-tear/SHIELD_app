@@ -24,7 +24,7 @@ export default function Home() {
     <div className="flex items-center justify-center min-h-screen bg-navy-900">
       <div className="flex flex-col items-center gap-3">
         <div className="w-12 h-12 rounded-full border-2 border-primary border-t-transparent animate-spin" />
-        <p className="text-muted text-sm">Loading SHIELD...</p>
+        <p className="text-muted text-sm">Loading Bachat...</p>
       </div>
     </div>
   );

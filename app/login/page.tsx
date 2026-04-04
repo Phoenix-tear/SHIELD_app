@@ -69,7 +69,7 @@ export default function LoginPage() {
           >
             <Shield className="w-8 h-8 text-white" />
           </motion.div>
-          <h1 className="text-2xl font-bold text-white">SHIELD</h1>
+          <h1 className="text-2xl font-bold text-white">Bachat</h1>
           <p className="text-muted text-sm mt-1">Rider Insurance, Simplified</p>
         </div>
 

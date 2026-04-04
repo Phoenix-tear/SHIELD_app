@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Plus } from 'lucide-react';
+import { FraudDetectionPanel } from '@/components/fraud-detection';
 import type { Claim } from '@/types';
 
 const tabs = ['all', 'PENDING', 'UNDER_REVIEW', 'PAID', 'REJECTED'];
@@ -56,6 +57,11 @@ export default function ClaimsPage() {
           ))}
         </TabsList>
       </Tabs>
+
+      {/* Fraud Detection Engine */}
+      <div className="mt-4">
+        <FraudDetectionPanel />
+      </div>
 
       <div className="mt-4 space-y-2">
         {loading ? (

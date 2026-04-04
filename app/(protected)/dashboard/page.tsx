@@ -13,6 +13,8 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Shield, Bell, ArrowRight, AlertTriangle, CheckCircle, Wallet, TrendingUp } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { RiderTracker } from '@/components/rider-tracker';
+import { BachatScore } from '@/components/shield-score';
 import type { Policy, Claim, Disruption, EarningsSummary } from '@/types';
 
 export default function DashboardPage() {
@@ -83,7 +85,7 @@ export default function DashboardPage() {
             <Shield className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-xs text-muted">SHIELD</p>
+            <p className="text-xs text-muted">Bachat</p>
             <h1 className="text-lg font-semibold">{getGreeting()}, {rider?.name?.split(' ')[0]}</h1>
           </div>
         </div>
@@ -110,7 +112,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between mb-3">
                 <Badge variant="success" className="gap-1">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  SHIELD ACTIVE
+                  BACHAT ACTIVE
                 </Badge>
                 {policy.expiresAt && new Date(policy.expiresAt).getTime() - Date.now() < 24 * 60 * 60 * 1000 && (
                   <Button size="sm" className="h-7 text-xs">Renew</Button>
@@ -152,6 +154,16 @@ export default function DashboardPage() {
             </div>
           </CardContent>
         </Card>
+      </motion.div>
+
+      {/* Tracker Component */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+        <RiderTracker />
+      </motion.div>
+
+      {/* BachatScore Gamification */}
+      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <BachatScore />
       </motion.div>
 
       {/* Disruption Alert / Claim CTA */}

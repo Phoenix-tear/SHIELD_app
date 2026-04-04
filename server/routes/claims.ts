@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { prisma } from '../index';
 import { validateToken, AuthRequest } from '../middleware/auth';
 import { validate } from '../middleware/validate';
-import { calculatePayout, computeFraudScore } from '../services/payout';
+import { calculatePayout, computeFraudScore, computeFraudAnalysis } from '../services/payout';
 
 const router = Router();
 
@@ -245,6 +245,32 @@ router.put('/:id/confirm', validateToken, async (req: AuthRequest, res) => {
   } catch (err) {
     console.error('Claim confirm error:', err);
     res.status(500).json({ error: 'Failed to confirm claim' });
+  }
+});
+
+// GET /claims/fraud-analysis — get fraud detection analysis for demo
+router.get('/fraud-analysis', validateToken, async (req: AuthRequest, res) => {
+  try {
+    const rider = req.rider;
+    const policy = await prisma.policy.findFirst({
+      where: { riderId: rider.id, status: 'ACTIVE' },
+    });
+    const maxPayout = policy?.maxWeeklyPayout ?? 4500;
+
+    // Run analysis with rider's typical claim parameters
+    const analysis = await computeFraudAnalysis(
+      rider.id,
+      600,             // sample claim amount
+      'HEAVY_RAIN',    // sample trigger
+      maxPayout,
+      12.8231,         // Kattankulathur lat
+      80.0441          // Kattankulathur lng
+    );
+
+    res.json({ analysis });
+  } catch (err) {
+    console.error('Fraud analysis error:', err);
+    res.status(500).json({ error: 'Failed to run fraud analysis' });
   }
 });
 

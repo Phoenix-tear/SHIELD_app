@@ -131,8 +131,8 @@ export default function PolicyPage() {
           <CardContent className="p-6 text-center">
             <Shield className="w-12 h-12 text-muted mx-auto mb-3" />
             <h3 className="font-semibold mb-1">No Active Policy</h3>
-            <p className="text-sm text-muted mb-4">Activate SHIELD to protect your earnings</p>
-            <Button onClick={handleActivate}>Activate SHIELD — {formatCurrency(49)}/week</Button>
+            <p className="text-sm text-muted mb-4">Activate Bachat to protect your earnings</p>
+            <Button onClick={handleActivate}>Activate Bachat — {formatCurrency(49)}/week</Button>
           </CardContent>
         </Card>
       )}

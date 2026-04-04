@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SHIELD — Rider Insurance',
+  title: 'Bachat — Rider Insurance',
   description: 'Parametric micro-insurance for Q-commerce delivery riders in India',
   manifest: '/manifest.json',
   icons: {

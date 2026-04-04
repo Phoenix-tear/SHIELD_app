@@ -19,7 +19,7 @@ export default function OfflinePage() {
             <p className="text-lg font-bold text-white">Check when online</p>
           </div>
           <div>
-            <p className="text-xs text-[#94a3b8]">SHIELD Status</p>
+            <p className="text-xs text-[#94a3b8]">Bachat Status</p>
             <p className="text-sm text-[#16a34a] font-medium">Last known: ACTIVE ✅</p>
           </div>
         </div>
