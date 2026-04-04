@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:server\"",
     "dev:next": "next dev",
     "dev:server": "tsx watch server/index.ts",
-    "build": "next build",
+    "build": "npm install --legacy-peer-deps && next build",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "prisma generate --schema=server/prisma/schema.prisma",
